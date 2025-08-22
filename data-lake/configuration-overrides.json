@@ -1,0 +1,7 @@
+{
+  "monitoringConfiguration": {
+    "s3MonitoringConfiguration": {
+      "logUri": "s3://ztm-data-engineering-bootcamp-x/logs"
+    }
+  }
+}

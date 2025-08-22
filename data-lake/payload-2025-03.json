@@ -1,0 +1,13 @@
+{
+  "sparkSubmit": {
+    "entryPoint": "s3://ztm-data-engineering-bootcamp-x/apps/reviews-per-listing.py",
+    "entryPointArguments": [
+      "--listings",
+      "s3://ztm-data-engineering-bootcamp-x/listings/date=2025-03/listings.csv.gz",
+      "--reviews",
+      "s3://ztm-data-engineering-bootcamp-x/reviews/date=2025-03/reviews.csv.gz",
+      "--output",
+      "s3://ztm-data-engineering-bootcamp-x/reviews_per_listings/date=2025-03"
+    ]
+  }
+}

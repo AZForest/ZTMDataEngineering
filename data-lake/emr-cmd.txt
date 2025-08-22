@@ -1,0 +1,5 @@
+aws emr-serverless start-job-run \
+--application-id 00fv0d7hcv4k030l \
+--execution-role-arn arn:aws:iam::904233091475:role/SparkServlessRole \
+--job-driver file://payload-2025-03.json \
+--configuration-overrides file://configuration-overrides.json
