@@ -2,3 +2,6 @@ data-processing-with-spark/.ipynb_checkpoints
 data-processing-with-spark/data
 data-processing-with-spark/artifacts
 data-processing-with-spark/venv
+orchestration-with-airflow/venv
+data_lake/.DS_Store
+.DS_Store
