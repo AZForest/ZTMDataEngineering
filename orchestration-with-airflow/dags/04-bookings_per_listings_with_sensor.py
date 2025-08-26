@@ -1,6 +1,7 @@
 from airflow.decorators import dag, task
 from airflow.operators.python import get_current_context
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from airflow.sensors.filesystem import FileSensor
 from datetime import datetime
 import os
 import csv
@@ -8,7 +9,7 @@ import random
 
 
 @dag(
-    "bookings_spark_pipeline",
+    "bookings_spark_pipeline_2",
     start_date=datetime(2025, 1, 1),
     schedule_interval="* * * * *",
     catchup=False,
@@ -29,7 +30,7 @@ def bookings_spark_pipeline():
         for i in range(num_bookings):
             booking = {
                 "booking_id": random.randint(1000, 5000),
-                "listing_id": random.choice([91031, 91287, 92352, 92399, 93015, 93457, 15400, 17402]),
+                "listing_id": random.choice([13913, 17402, 24328, 33332, 116268, 117203, 127652, 127860]),
                 "user_id": random.randint(1000, 5000),
                 "booking_time": execution_date.strftime("%Y-%m-%d %H:%M:%S"),
                 "status": random.choice(["confirmed", "cancelled", "pending"])
@@ -56,6 +57,14 @@ def bookings_spark_pipeline():
 
         print(f"Generated bookings data written to {file_path}")
 
+    wait_for_listings_file = FileSensor(
+        task_id="wait_for_listings_file",
+        fs_conn_id="local_fs",
+        filepath="/tmp/data/listings/{{ execution_date.strftime('%Y-%m') }}/listings.csv.gz",
+        poke_interval=30,
+        timeout=600,
+    )
+
     spark_job = SparkSubmitOperator(
         task_id="process_listings_and_bookings",
         application="dags/bookings_per_listing_spark.py",
@@ -70,5 +79,6 @@ def bookings_spark_pipeline():
 
     bookings_file = generate_bookings()
     bookings_file >> spark_job
+    wait_for_listings_file >> spark_job
 
 dag_instance = bookings_spark_pipeline()

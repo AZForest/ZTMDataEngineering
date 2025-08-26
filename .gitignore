@@ -5,3 +5,4 @@ data-processing-with-spark/venv
 orchestration-with-airflow/venv
 data_lake/.DS_Store
 .DS_Store
+orchestration-with-airflow/dags/__pycache__
