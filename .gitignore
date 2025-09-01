@@ -7,3 +7,4 @@ data_lake/.DS_Store
 .DS_Store
 orchestration-with-airflow/dags/__pycache__
 ml-with-spark/.ipynb_checkpoints
+ml-with-spark/venv
